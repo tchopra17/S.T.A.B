@@ -1,0 +1,14 @@
+import javax.swing.*;
+
+public class GameScreen {
+	public static void main(String[] args) {
+		initJFrame();
+	}
+	
+	public static void initJFrame(){
+		JFrame jframe = new JFrame();
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jframe.setSize(1000, 1000);
+		jframe.setVisible(true);
+	}
+}

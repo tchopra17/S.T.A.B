@@ -1,0 +1,19 @@
+import javax.swing.*;
+
+public class GameScreen {
+	private JLabel label1;
+	public static void main(String[] args) {
+		GameScreen screen = new GameScreen();
+		screen.initJFrame();
+	}
+	
+	public void initJFrame(){
+		JFrame jframe = new JFrame();
+		
+		label1 = new JLabel("Hello World");
+		
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jframe.setSize(1000, 1000);
+		jframe.setVisible(true);
+	}
+}
