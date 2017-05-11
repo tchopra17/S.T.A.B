@@ -1,0 +1,15 @@
+import org.dyn4j.dynamics.*;
+import org.dyn4j.geometry.*;
+
+
+public class GameWorld {
+	private World world;
+	
+	public void initWorld(){
+		this.world = new World();
+		Rectangle floorRect = new Rectangle(15.0, 1.0);
+		GameObject floor = new GameObject();
+		floor.addFixture(new BodyFixture(floorRect));
+		floor.setMass(MassType.INFINITE);
+	}
+}

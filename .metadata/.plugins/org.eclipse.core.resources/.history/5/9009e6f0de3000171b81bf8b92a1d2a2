@@ -1,0 +1,30 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class GameScreen extends JFrame{
+	private JLabel label1;
+	private int screenWidth = 800, screenHeight = 800;
+	
+	public static void main(String[] args) {
+		GameScreen screen = new GameScreen();
+		screen.initJFrame();
+	}
+	
+	public void initJFrame(){
+		
+		label1 = new JLabel("Hello World", SwingConstants.CENTER);
+		
+		add(label1, BorderLayout.CENTER);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(screenWidth, screenHeight);
+		setVisible(true);
+		
+		Player p = new Player();
+	}
+	public int getWidth(){
+		return screenWidth;
+	}
+	public int getHeight(){
+		return screenHeight;
+	}
+}
