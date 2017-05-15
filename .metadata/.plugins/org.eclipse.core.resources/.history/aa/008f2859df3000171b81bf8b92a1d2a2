@@ -1,0 +1,8 @@
+import java.awt.*;
+public class Player {
+	public void paint(Graphics g){
+		GameScreen screen = new GameScreen();
+		g.setColor(Color.black);
+		g.fillRect((screen.getWidth() / 2) - 50, (screen.getWidth() / 2) - 50, 100, 100);
+	}
+}
