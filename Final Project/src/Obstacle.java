@@ -1,14 +1,15 @@
 import java.awt.Rectangle;
-public class Player {
+
+public class Obstacle {
 	private double x, y, height, width;
 
-	public Player(double x, double y, double height, double width) {
+	public Obstacle(double x, double y, double height, double width) {
 		this.x = x;
 		this.y = y;
 		this.height = height;
 		this.width = width;
 	}
-
+	
 	public Rectangle returnPlayer() {
 		Rectangle rect = new Rectangle((int) x,(int) y,(int) height, (int) width);
 		return rect;
@@ -29,6 +30,4 @@ public class Player {
 	public double getY() {
 		return y;
 	}
-
-	
 }
