@@ -1,0 +1,24 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import javax.swing.*;
+
+public class GameScreen extends JFrame{
+	
+	private final int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 800;
+	
+	public static void main(String[] args) {
+		GameScreen screen = new GameScreen();
+		screen.initJFrame();
+	}
+	
+	public void initJFrame(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setVisible(true);
+	}
+	public void paint(Graphics g){
+		
+	}
+}

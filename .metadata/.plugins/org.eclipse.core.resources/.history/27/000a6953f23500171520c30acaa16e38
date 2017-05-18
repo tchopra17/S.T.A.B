@@ -1,0 +1,26 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+
+import javax.swing.*;
+
+public class GameScreen extends JFrame{
+	
+	private final int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 800;
+	
+	public void initJFrame(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setVisible(true);
+	}
+	
+	public void paint(Graphics g){
+		g.fillRect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 100, 100);
+		g.setColor(Color.BLACK);
+	}
+	
+	public static void main(String[] args) {
+		GameScreen screen = new GameScreen();
+		screen.initJFrame();
+	}
+}

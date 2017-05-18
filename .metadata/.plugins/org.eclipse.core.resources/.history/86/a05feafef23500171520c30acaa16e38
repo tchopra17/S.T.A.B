@@ -1,0 +1,51 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.*;
+
+public class GameScreen extends JFrame implements KeyListener{
+	
+	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
+	private int height;
+	
+	public void initJFrame(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setVisible(true);
+	}
+	
+	public void paint(Graphics g){
+		g.fillRect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, height, 50);
+		g.setColor(Color.BLACK);
+	}
+	
+	public static void main(String[] args) {
+		GameScreen screen = new GameScreen();
+		screen.initJFrame();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		int key = e.getKeyCode();
+		
+		if (key == KeyEvent.VK_W) {
+			height += 10;
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
