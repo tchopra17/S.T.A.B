@@ -17,6 +17,7 @@ public class World extends JFrame implements KeyListener, ActionListener {
 	double vely = 0;
 	static int randno = (int) (5 * Math.random() + 1);
 	boolean didGameLoad;
+	private GameScreen ref;
 
 	Player p1 = new Player(x, y, 30, 30);
 	Obstacle o1 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
@@ -24,7 +25,8 @@ public class World extends JFrame implements KeyListener, ActionListener {
 	Obstacle o3 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
 	Obstacle o4 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
 
-	public GameScreen() {
+	public World(GameScreen temp) {
+		ref = temp;
 		t.start();
 		didGameLoad = true;
 		addKeyListener(this);
@@ -36,6 +38,10 @@ public class World extends JFrame implements KeyListener, ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		setVisible(true);
+	}
+	
+	public void setScreen(GameScreen temp){
+		ref = temp;
 	}
 
 	public void paint(Graphics g) {
@@ -68,14 +74,7 @@ public class World extends JFrame implements KeyListener, ActionListener {
 		}
 
 	}
-
-	public static void main(String[] args) {
-		GameScreen screen = new GameScreen();
-		screen.initJFrame();
-		Player p1 = new Player(x, y, 50, 50);
-
-	}
-
+	
 	public void upPressed() {
 		vely = -0.5;
 		velx = 0;
