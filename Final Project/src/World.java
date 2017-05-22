@@ -16,19 +16,18 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	double velx = 0;
 	double vely = 0;
 	static int randno = (int) (5 * Math.random() + 1);
-	boolean didGameLoad;
+	int gameLoaded = 0;
 	private GameScreen ref;
 
 	Player p1 = new Player(x, y, 30, 30);
-	Obstacle o1 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-	Obstacle o2 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-	Obstacle o3 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-	Obstacle o4 = new Obstacle(x, y, (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+	Obstacle o1 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+	Obstacle o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+	Obstacle o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+	Obstacle o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
 
 	public World(GameScreen temp) {
 		ref = temp;
 		t.start();
-		didGameLoad = true;
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
@@ -46,32 +45,12 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		p1.setY(y);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.fill(p1.returnPlayer());
-
-		if (didGameLoad == true) {
-			o1.setX((int) (500 * Math.random() + 50));
-			o1.setY((int) (500 * Math.random() + 50));
-			Graphics2D g3 = (Graphics2D) g;
-			g3.fill(o1.returnPlayer());
-
-			o2.setX((int) (500 * Math.random() + 50));
-			o2.setY((int) (500 * Math.random() + 50));
-			Graphics2D g4 = (Graphics2D) g;
-			g4.fill(o2.returnPlayer());
-
-			o3.setX((int) (500 * Math.random() + 50));
-			o3.setY((int) (500 * Math.random() + 50));
-			Graphics2D g5 = (Graphics2D) g;
-			g5.fill(o3.returnPlayer());
-
-			o4.setX((int) (500 * Math.random() + 50));
-			o4.setY((int) (500 * Math.random() + 50));
-			Graphics2D g6 = (Graphics2D) g;
-			g6.fill(o4.returnPlayer());
-			didGameLoad = false;
-		}
-
+		gameLoaded = 1; 
+		g2.fill(o1.returnPlayer());
+		g2.fill(o2.returnPlayer());
+		g2.fill(o3.returnPlayer());
+		g2.fill(o4.returnPlayer());
 	}
-	
 	public void upPressed() {
 		vely = -0.5;
 		velx = 0;
