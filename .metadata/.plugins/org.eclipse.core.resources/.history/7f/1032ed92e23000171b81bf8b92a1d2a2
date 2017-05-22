@@ -1,8 +1,0 @@
-import java.awt.*;
-import java.awt.geom.*;
-import javax.swing.JFrame;
-
-public class Player extends JFrame{
-	
-	
-}

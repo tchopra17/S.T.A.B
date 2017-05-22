@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class World extends JFrame implements KeyListener, ActionListener {
+public class World extends JPanel implements KeyListener, ActionListener {
 	Timer t = new Timer(5, this);
 	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
 	static double x = 0;
@@ -34,17 +34,14 @@ public class World extends JFrame implements KeyListener, ActionListener {
 		setFocusTraversalKeysEnabled(true);
 	}
 
-	public void initJFrame() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		setVisible(true);
-	}
 	
 	public void setScreen(GameScreen temp){
 		ref = temp;
 	}
-
-	public void paint(Graphics g) {
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		p1.setX(x);
 		p1.setY(y);
 		Graphics2D g2 = (Graphics2D) g;
