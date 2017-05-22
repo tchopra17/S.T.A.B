@@ -10,18 +10,19 @@ import javax.swing.Timer;
 
 
 public class World extends JFrame implements KeyListener, ActionListener{
-	Timer t = new Timer(5, this);
-	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
-	double x = 0, y = 0 ,velx = 0, vely = 0;
-	Player p1 = new Player(x, y, 50, 50, 0);
+	Timer t;
+	Player p1;
 	private GameScreen ref;
+	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
 	
 	public World(GameScreen temp){
 		ref=temp;
+		t = new Timer(1, this);
 		t.start();
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
+		p1 = new Player(0, 0, 50, 50, 0);
 	}
 	public void initJFrame(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,8 +31,6 @@ public class World extends JFrame implements KeyListener, ActionListener{
 	}
 	
 	public void paint(Graphics g){
-		p1.setX(x);
-		p1.setY(y);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.fill(p1.returnPlayer());
 	}
@@ -41,20 +40,16 @@ public class World extends JFrame implements KeyListener, ActionListener{
 	}
 	
 	public void upPressed(){
-		vely = -0.5;
-		velx = 0;
+		p1.accelerate();
 	}
 	public void downPressed(){
-		vely = 0.5;
-		velx = 0;
+		p1.deaccelerate();
 	}
 	public void rightPressed(){
-		vely = 0;
-		velx = 0.5;
+		p1.turnRight();
 	}
 	public void leftPressed(){
-		vely = 0;
-		velx = -0.5;
+		p1.turnLeft();
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -91,7 +86,7 @@ public class World extends JFrame implements KeyListener, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		x = p1.getX() + velx;
-		y = p1.getY() + vely;
+		p1.setX(p1.getX() + p1.getVelocity()*Math.acos(p1.getDirection()*(Math.PI/180.)));
+		p1.setY(p1.getY() + p1.getVelocity()*Math.asin(p1.getDirection()*(Math.PI/180.)));
 	}
 }

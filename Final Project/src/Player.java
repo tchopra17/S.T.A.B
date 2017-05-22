@@ -34,12 +34,12 @@ public class Player {
 		return y;
 	}
 	
-	public void accelerate(double time){
-		velocity=velocity+1./time;
+	public void accelerate(){
+		velocity=velocity+1;
 	}
 	
-	public void deaccelerate(double time){
-		velocity=velocity-deaccel*time;
+	public void deaccelerate(){
+		velocity=velocity-deaccel;
 	}
 	
 	public double getVelocity(){
