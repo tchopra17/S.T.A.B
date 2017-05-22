@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
-
 public class World extends JPanel implements KeyListener, ActionListener {
 	Timer t = new Timer(5, this);
 	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
@@ -51,24 +50,22 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		g2.fill(o3.returnPlayer());
 		g2.fill(o4.returnPlayer());
 	}
-	public void upPressed() {
-		vely = -0.5;
-		velx = 0;
-	}
 
-	public void downPressed() {
-		vely = 0.5;
-		velx = 0;
+	public void setScreen(GameScreen temp){
+		ref=temp;
 	}
-
-	public void rightPressed() {
-		vely = 0;
-		velx = 0.5;
+	
+	public void upPressed(){
+		p1.accelerate();
 	}
-
-	public void leftPressed() {
-		vely = 0;
-		velx = -0.5;
+	public void downPressed(){
+		p1.deaccelerate();
+	}
+	public void rightPressed(){
+		p1.turnRight();
+	}
+	public void leftPressed(){
+		p1.turnLeft();
 	}
 
 	@Override
@@ -106,7 +103,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		x = p1.getX() + velx;
-		y = p1.getY() + vely;
+		p1.setX(p1.getX() + p1.getVelocity()*Math.acos(p1.getDirection()*(Math.PI/180.)));
+		p1.setY(p1.getY() + p1.getVelocity()*Math.asin(p1.getDirection()*(Math.PI/180.)));
 	}
 }
