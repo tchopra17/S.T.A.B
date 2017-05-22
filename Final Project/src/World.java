@@ -13,7 +13,7 @@ public class World extends JFrame implements KeyListener, ActionListener{
 	Timer t = new Timer(5, this);
 	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
 	double x = 0, y = 0 ,velx = 0, vely = 0;
-	Player p1 = new Player(x, y, 50, 50);
+	Player p1 = new Player(x, y, 50, 50, 0);
 	private GameScreen ref;
 	
 	public World(GameScreen temp){
