@@ -8,14 +8,21 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class GameScreen {
+public class GameScreen extends JFrame{
 	World ref;
+	final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
 	
 	public GameScreen(){
 		ref=null;
 	}
+	public void initJFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setVisible(true);
+	}
 	
 	public void setWorld(World temp){
 		ref=temp;
+		add(ref);
 	}
 }

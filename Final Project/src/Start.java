@@ -4,6 +4,6 @@ public class Start {
 		GameScreen ref=new GameScreen();
 		World screen = new World(ref);
 		ref.setWorld(screen);
-		screen.initJFrame();
+		ref.initJFrame();
 	}
 }
