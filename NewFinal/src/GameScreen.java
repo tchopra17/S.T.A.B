@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class GameScreen extends JFrame{
 	World ref;
-	final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
+	final int SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 1000;
 	
 	public GameScreen(){
 		ref=null;

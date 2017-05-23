@@ -2,6 +2,7 @@ import java.awt.Rectangle;
 import javax.swing.Timer;
 public class Player {
 	private double x, y, height, width, velocity, deaccel, direction;
+	private int health;
 
 	public Player(double x, double y, double height, double width, double direction) {
 		this.x = x;
@@ -11,6 +12,7 @@ public class Player {
 		this.direction=direction;
 		deaccel=1;
 		velocity=0;
+		health=0;
 	}
 
 	public Rectangle returnPlayer() {
@@ -35,11 +37,17 @@ public class Player {
 	}
 	
 	public void accelerate(){
-		velocity=velocity+1;
+		if(velocity!=5)
+			velocity=velocity+1;
+		else
+			velocity=5;
 	}
 	
 	public void deaccelerate(){
-		velocity=velocity-deaccel;
+		if(velocity!=0)
+			velocity=velocity-deaccel;
+		else
+			velocity=0;
 	}
 	
 	public double getVelocity(){
@@ -47,25 +55,15 @@ public class Player {
 	}
 	
 	public void turnLeft(){
-		direction=(direction-5)%360.;
+		direction=(direction-10);
 	}
 	
 	public void turnRight(){
-		direction=(direction+5)%360.;
+		direction=(direction+10);
 	}
 	
 	public double getDirection(){
-		return direction;
+		return direction%360.;
 	}
-	
-	public void setVelocity(double v){
-		velocity = v;
-	}
-	
-	public double getWidth(){
-		return width;
-	} 
-	public double getHeight(){
-		return height;
-	}
+
 }
