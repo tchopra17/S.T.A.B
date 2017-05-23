@@ -8,51 +8,40 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 public class World extends JPanel implements KeyListener, ActionListener {
-	Timer t = new Timer(5, this);
-	private final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
-	static double x = 0;
-	static double y = 0;
-	double velx = 0;
-	double vely = 0;
-	static int randno = (int) (5 * Math.random() + 1);
-	int gameLoaded = 0;
-	private GameScreen ref;
-
-	Player p1 = new Player(x, y, 30, 30);
-	Obstacle o1 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-	Obstacle o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-	Obstacle o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-	Obstacle o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+	Timer t;
+	Player p1;
+	Player p2;
+	Obstacle o1;
+	Obstacle o2;
+	Obstacle o3;
+	Obstacle o4;
+	boolean isKeyPressedP1;
+	boolean isKeyPressedP2;
 
 	public World(GameScreen temp) {
-		ref = temp;
+		t = new Timer(5, this);
 		t.start();
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
-	}
-
-	
-	public void setScreen(GameScreen temp){
-		ref = temp;
+		p1 = new Player(0, 0, 30, 30, 0);
+		p2 = new Player(200, 200, 30, 30, 0);
+		o1 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+		o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+		o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+		o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		p1.setX(x);
-		p1.setY(y);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.fill(p1.returnPlayer());
-		gameLoaded = 1; 
+		g2.fill(p2.returnPlayer());
 		g2.fill(o1.returnPlayer());
 		g2.fill(o2.returnPlayer());
 		g2.fill(o3.returnPlayer());
 		g2.fill(o4.returnPlayer());
-	}
-
-	public void setScreen(GameScreen temp){
-		ref=temp;
 	}
 	
 	public void upPressed(){
@@ -67,6 +56,24 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void leftPressed(){
 		p1.turnLeft();
 	}
+	public void wPressed(){
+		p2.accelerate();
+	}
+	public void sPressed(){
+		p2.deaccelerate();
+	}
+	public void dPressed(){
+		p2.turnRight();
+	}
+	public void aPressed(){
+		p2.turnLeft();
+	}
+	public void p1NotPressed(){
+		p1.deaccelerate();
+	}
+	public void p2NotPressed(){
+		p2.deaccelerate();
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -78,32 +85,38 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_UP) {
+		if (key == KeyEvent.VK_UP){
 			upPressed();
 		}
-		if (key == KeyEvent.VK_DOWN) {
+		if (key == KeyEvent.VK_DOWN)
 			downPressed();
-		}
-		if (key == KeyEvent.VK_LEFT) {
+		if (key == KeyEvent.VK_LEFT)
 			leftPressed();
-		}
-		if (key == KeyEvent.VK_RIGHT) {
+		if (key == KeyEvent.VK_RIGHT)
 			rightPressed();
-		}
+		if (key == KeyEvent.VK_W)
+			wPressed();
+		if (key == KeyEvent.VK_S)
+			sPressed();
+		if (key == KeyEvent.VK_A)
+			aPressed();
+		if (key == KeyEvent.VK_D)
+			dPressed();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		p1NotPressed();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		p1.setX(p1.getX() + p1.getVelocity()*Math.acos(p1.getDirection()*(Math.PI/180.)));
-		p1.setY(p1.getY() + p1.getVelocity()*Math.asin(p1.getDirection()*(Math.PI/180.)));
+		p1.setX(p1.getX() + p1.getVelocity()*Math.cos(p1.getDirection()*(Math.PI/180.)));
+		p1.setY(p1.getY() + p1.getVelocity()*Math.sin(p1.getDirection()*(Math.PI/180.)));
+		p2.setX(p2.getX() + p2.getVelocity()*Math.cos(p2.getDirection()*(Math.PI/180.)));
+		p2.setY(p2.getY() + p2.getVelocity()*Math.sin(p2.getDirection()*(Math.PI/180.)));
 	}
 }
