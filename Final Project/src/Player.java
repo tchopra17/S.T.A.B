@@ -1,16 +1,23 @@
 import java.awt.Rectangle;
-public class Player {
-	private double x, y, height, width;
+import javax.swing.Timer;
 
-	public Player(double x, double y, double height, double width) {
+public class Player {
+	private double x, y, height, width, velocity, deaccel, direction;
+	private int health;
+
+	public Player(double x, double y, double height, double width, double direction, int health) {
 		this.x = x;
 		this.y = y;
 		this.height = height;
 		this.width = width;
+		this.direction = direction;
+		this.health = health;
+		deaccel = 1;
+		velocity = 0;
 	}
 
 	public Rectangle returnPlayer() {
-		Rectangle rect = new Rectangle((int) x,(int) y,(int) height, (int) width);
+		Rectangle rect = new Rectangle((int) x, (int) y, (int) height, (int) width);
 		return rect;
 	}
 
@@ -30,5 +37,35 @@ public class Player {
 		return y;
 	}
 
+	public void accelerate() {
+		velocity = velocity + 1;
+	}
+
+	public void deaccelerate() {
+		velocity = velocity - deaccel;
+	}
+
+	public double getVelocity() {
+		return velocity;
+	}
+
+	public void turnLeft() {
+		direction = (direction - 5) % 360.;
+	}
+
+	public void turnRight() {
+		direction = (direction + 5) % 360.;
+	}
+
+	public double getDirection() {
+		return direction;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
 	
+	public int getHealth() {
+		return health;
+	}
 }
