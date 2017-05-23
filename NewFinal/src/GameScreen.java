@@ -1,4 +1,4 @@
-package screens;
+package project;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,12 +18,14 @@ import javax.swing.*;
 public class GameScreen extends JPanel implements MouseListener, MouseMotionListener{
 	private World ref;
 	private boolean running;
+	private Thread game;
 	private GuiScreen screen;
 	public static final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 600;
 	private BufferedImage image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 			
 	public GameScreen(){
 		ref = null;
+		setFocusable(true);
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -37,7 +39,13 @@ public class GameScreen extends JPanel implements MouseListener, MouseMotionList
 		screen.update();
 	}
 	
-	private void render(){
+	/*public static void main(String[] args){
+		MainMenu menu = new MainMenu();
+		menu.render(null);
+		menu.update();
+	}
+	*/
+	public void render(){
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.setColor(Color.white);
 		g.fillRect(0, 0, SCREEN_WIDTH,  SCREEN_HEIGHT);
@@ -58,6 +66,26 @@ public class GameScreen extends JPanel implements MouseListener, MouseMotionList
 		ref=temp;
 		add(ref);
 	}
+	
+	public void start(){
+		if(running){
+			return;
+		}
+		running = true;
+		game = new Thread("game");
+		game.start();
+	}
+	
+	public void stop(){
+		if(!running){
+			return;
+		}
+		running = false;
+		System.exit(0);
+	}
+	
+	
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		screen.mouseDragged(e);

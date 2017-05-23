@@ -1,4 +1,4 @@
-package screens;
+package project;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +20,7 @@ public class GuiButton {
 	private Color h;
 	private Color p;
 	private Font font = new Font("Bebas Neue Regular", Font.BOLD, 22);
-	//private AudioHandler audio;
+	
 	
 	public GuiButton(int x, int y, int width, int height){
 		clickBox = new Rectangle (x, y, width, height);
@@ -28,9 +28,6 @@ public class GuiButton {
 		r = new Color(173,177, 179);
 		h = new Color(150, 156, 158);
 		p = new Color(111, 116,117);
-		
-		//audio = AudioHandler.gerInstance();
-		//audio.load("select.wave", "select");
 	}
 	
 	public void update(){}
@@ -44,13 +41,13 @@ public class GuiButton {
 			g.setColor(h);
 			g.fill(clickBox);
 		}
-		else if(currentState == State.PRESSED){
+		else{
 			g.setColor(p);
 			g.fill(clickBox);
 		}
 		g.setColor(Color.white);
 		g.setFont(font);
-		g.drawString(text, clickBox.x + clickBox.width / 2, clickBox.y + clickBox.height / 2);
+		g.drawString(text, clickBox.x + clickBox.width / 2 - 50, clickBox.y + clickBox.height / 2);
 	}
 	
 	public void addActionListener(ActionListener listener){

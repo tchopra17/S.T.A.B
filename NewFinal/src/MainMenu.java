@@ -1,4 +1,4 @@
-package screens;
+package project;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,10 +22,10 @@ public class MainMenu extends GuiPanel {
 	public MainMenu() {
 		super();
 
-		GuiButton playButton = new GuiButton(GameScreen.SCREEN_WIDTH / 2 - buttonW / 2, 220, buttonW, buttonH);
-		GuiButton instructionsButton = new GuiButton(GameScreen.SCREEN_WIDTH / 2 - buttonW / 2,
+		GuiButton playButton = new GuiButton(GameScreen.SCREEN_WIDTH / 2 - buttonW / 2 , 220, buttonW, buttonH);
+		GuiButton instructionsButton = new GuiButton(GameScreen.SCREEN_WIDTH / 2 - buttonW / 2 ,
 				playButton.getY() + spacing, buttonW, buttonH);
-		GuiButton quitButton = new GuiButton(GameScreen.SCREEN_WIDTH / 2 - buttonW / 2,
+		GuiButton quitButton = new GuiButton(GameScreen.SCREEN_WIDTH / 2 - buttonW / 2 ,
 				instructionsButton.getY() + spacing, buttonW, buttonH);
 
 		playButton.setText("Play");
@@ -62,10 +62,10 @@ public class MainMenu extends GuiPanel {
 		super.render(g);
 		g.setColor(Color.black);
 		g.setFont(titleFont);
-		g.drawString(title, GameScreen.SCREEN_WIDTH / 2 , 150);
+		g.drawString(title, GameScreen.SCREEN_WIDTH / 2 -185 , 150);
 		g.setFont(subFont);
-		g.drawString(subtitle, GameScreen.SCREEN_WIDTH / 2 , 180);
+		g.drawString(subtitle, GameScreen.SCREEN_WIDTH / 2 -140, 180);
 		g.setFont(authorFont);
-		g.drawString(authors, GameScreen.SCREEN_WIDTH / 2 , 200);
+		g.drawString(authors, GameScreen.SCREEN_WIDTH / 2 -180, 200);
 	}
 }
