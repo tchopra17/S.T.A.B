@@ -65,5 +65,14 @@ public class Player {
 	public double getDirection(){
 		return direction%360.;
 	}
+	public double getWidth(){
+		return width;
+	} 
+	public double getHeight(){
+		return height;
+	}
+	public void setVelocity(double v){
+		velocity = v;
+	}
 
 }

@@ -17,6 +17,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	Obstacle o4;
 	boolean isKeyPressedP1;
 	boolean isKeyPressedP2;
+	Tip tip;
+	Tip tip2;
 
 	public World(GameScreen temp) {
 		t = new Timer(5, this);
@@ -30,6 +32,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
 		o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
 		o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
+		tip = new Tip(p1.getX() + p1.getWidth(), p1.getY() + ((p1.getHeight() / 2)-10), 70, 10, 0);
+		tip2 = new Tip(p2.getX() + p2.getWidth(), p2.getY() + ((p2.getHeight() / 2)-10), 70, 10, 0);
 	}
 	
 	@Override
@@ -38,6 +42,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.fill(p1.returnPlayer());
 		g2.fill(p2.returnPlayer());
+		g2.fill(tip.returnPlayer());
+		g2.fill(tip2.returnPlayer());
 		g2.fill(o1.returnPlayer());
 		g2.fill(o2.returnPlayer());
 		g2.fill(o3.returnPlayer());
@@ -113,10 +119,41 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		double p1X = p1.getX();
+		double p1Y = p1.getY();
+		double p2X = p2.getX();
+		double p2Y = p2.getY();
+		
+		//Player 1 collision
+		if (p1X >= o1.getX() && p1X < o1.getX() + o1.getWidth() && p1Y >= o1.getY() && p1Y < o1.getY() + o1.getHeight()){
+			p1.setVelocity(0);
+		} else if (p1X >= o2.getX() && p1X < o2.getX() + o2.getWidth() && p1Y >= o2.getY() && p1Y < o2.getY() + o2.getHeight()){
+			p1.setVelocity(0);
+		} else if (p1X >= o3.getX() && p1X < o3.getX() + o3.getWidth() && p1Y >= o3.getY() && p1Y < o3.getY() + o3.getHeight()){
+			p1.setVelocity(0);
+		} else if (p1X >= o4.getX() && p1X < o4.getX() + o4.getWidth() && p1Y >= o4.getY() && p1Y < o4.getY() + o4.getHeight()){
+			p1.setVelocity(0);
+		}
+		
+		//Player 2 collision
+		if (p2X >= o1.getX() && p2X < o1.getX() + o1.getWidth() && p2Y >= o1.getY() && p2Y < o1.getY() + o1.getHeight()){
+			p2.setVelocity(0);
+		} else if (p2X >= o2.getX() && p2X < o2.getX() + o2.getWidth() && p2Y >= o2.getY() && p2Y < o2.getY() + o2.getHeight()){
+			p2.setVelocity(0);
+		} else if (p2X >= o3.getX() && p2X < o3.getX() + o3.getWidth() && p2Y >= o3.getY() && p2Y < o3.getY() + o3.getHeight()){
+			p2.setVelocity(0);
+		} else if (p2X >= o4.getX() && p2X < o4.getX() + o4.getWidth() && p2Y >= o4.getY() && p2Y < o4.getY() + o4.getHeight()){
+			p2.setVelocity(0);
+		}
+		
 		repaint();
 		p1.setX(p1.getX() + p1.getVelocity()*Math.cos(p1.getDirection()*(Math.PI/180.)));
 		p1.setY(p1.getY() + p1.getVelocity()*Math.sin(p1.getDirection()*(Math.PI/180.)));
 		p2.setX(p2.getX() + p2.getVelocity()*Math.cos(p2.getDirection()*(Math.PI/180.)));
 		p2.setY(p2.getY() + p2.getVelocity()*Math.sin(p2.getDirection()*(Math.PI/180.)));
+		tip.setX(p1.getX());
+		tip.setY(p1.getY());
+		tip2.setX(p2.getX());
+		tip2.setY(p2.getY());
 	}
 }
