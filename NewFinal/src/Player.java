@@ -55,15 +55,24 @@ public class Player {
 	}
 	
 	public void turnLeft(){
-		direction=(direction-10);
+		direction=(direction-5);
 	}
 	
 	public void turnRight(){
-		direction=(direction+10);
+		direction=(direction+5);
 	}
 	
 	public double getDirection(){
 		return direction%360.;
+	}
+	public double getWidth(){
+		return width;
+	} 
+	public double getHeight(){
+		return height;
+	}
+	public void setVelocity(double v){
+		velocity = v;
 	}
 
 }
