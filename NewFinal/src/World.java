@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.*;
 public class World extends JPanel implements KeyListener, ActionListener {
@@ -20,7 +21,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	Tip tip;
 	Tip tip2;
 
-	public World(GameScreen temp) {
+	public World() {
 		t = new Timer(5, this);
 		t.start();
 		addKeyListener(this);
@@ -40,10 +41,16 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		AffineTransform old=g2.getTransform();
+		
+		g2.rotate(p1.getDirection()*Math.PI/180,p1.getX()+p1.getWidth()/2,p1.getY()+p1.getHeight()/2);
 		g2.fill(p1.returnPlayer());
-		g2.fill(p2.returnPlayer());
 		g2.fill(tip.returnPlayer());
+		g2.setTransform(old);
+		g2.rotate(p2.getDirection()*Math.PI/180,p2.getX()+p2.getWidth()/2,p2.getY()+p2.getHeight()/2);
+		g2.fill(p2.returnPlayer());
 		g2.fill(tip2.returnPlayer());
+		g2.setTransform(old);
 		g2.fill(o1.returnPlayer());
 		g2.fill(o2.returnPlayer());
 		g2.fill(o3.returnPlayer());

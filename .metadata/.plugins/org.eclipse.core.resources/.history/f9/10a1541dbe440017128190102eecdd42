@@ -1,0 +1,16 @@
+import javax.swing.*;
+import java.awt.font.*;
+
+public class MainMenu extends JPanel {
+	private Font titleFont = new Font("Bebas Neue Regular", Font.BOLD, 100);
+	private Font subFont = new Font("Bebas Neue Regular", Font.PLAIN, 28);
+	private Font authorFont = new Font("Bebas Neue Regular", Font.PLAIN, 22);
+	private String title = "S.T.A.B.";
+	private String subtitle = "Sharp Tips Action Battle";
+	private String authors = "J. Bao, T. Chopra, R. Miller, K. Wang";
+	private int buttonW = 220;
+	private int buttonH = 60;
+	private int spacing = 90;
+	private int SCREEN_WIDTH = 600;
+
+}
