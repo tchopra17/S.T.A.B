@@ -9,25 +9,36 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 public class World extends JPanel implements KeyListener, ActionListener {
-	Timer t = new Timer(5, this);
-	static double x;
-	static double y;
-	
-	Player p1 = new Player(x, y, 30, 30, 0, 5);
-	Obstacle o1 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
-			(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
-	Obstacle o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
-			(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
-	Obstacle o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
-			(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
-	Obstacle o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
-			(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+	Timer t;
+	Player p1;
+	Player p2;
+	Obstacle o1;
+	Obstacle o2;
+	Obstacle o3;
+	Obstacle o4;
+	boolean isKeyPressedP1;
+	boolean isKeyPressedP2;
+	Tip tip;
+	Tip tip2;
 
 	public World(GameScreen temp) {
+		t = new Timer(5, this);
 		t.start();
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
+		p1 = new Player(0, 0, 30, 30, 0);
+		p2 = new Player(200, 200, 30, 30, 0);
+		o1 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		tip = new Tip(p1.getRight(), p1.getTop() + ((p1.getHeight() / 2) - 10), 70, 10, 0);
+		tip2 = new Tip(p2.getRight(), p2.getTop() + ((p2.getHeight() / 2) - 10), 70, 10, 0);
 	}
 
 	@Override
@@ -35,7 +46,9 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.fill(p1.returnPlayer());
-
+		g2.fill(p2.returnPlayer());
+		g2.fill(tip.returnPlayer());
+		g2.fill(tip2.returnPlayer());
 		g2.fill(o1.returnPlayer());
 		g2.fill(o2.returnPlayer());
 		g2.fill(o3.returnPlayer());
@@ -58,6 +71,30 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		p1.turnLeft();
 	}
 
+	public void wPressed() {
+		p2.accelerate();
+	}
+
+	public void sPressed() {
+		p2.deaccelerate();
+	}
+
+	public void dPressed() {
+		p2.turnRight();
+	}
+
+	public void aPressed() {
+		p2.turnLeft();
+	}
+
+	public void p1NotPressed() {
+		p1.deaccelerate();
+	}
+
+	public void p2NotPressed() {
+		p2.deaccelerate();
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -68,51 +105,61 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		int key = e.getKeyCode();
-
 		if (key == KeyEvent.VK_UP) {
 			upPressed();
 		}
-		if (key == KeyEvent.VK_DOWN) {
+		if (key == KeyEvent.VK_DOWN)
 			downPressed();
-		}
-		if (key == KeyEvent.VK_LEFT) {
+		if (key == KeyEvent.VK_LEFT)
 			leftPressed();
-		}
-		if (key == KeyEvent.VK_RIGHT) {
+		if (key == KeyEvent.VK_RIGHT)
 			rightPressed();
-		}
+		if (key == KeyEvent.VK_W)
+			wPressed();
+		if (key == KeyEvent.VK_S)
+			sPressed();
+		if (key == KeyEvent.VK_A)
+			aPressed();
+		if (key == KeyEvent.VK_D)
+			dPressed();
+	}
+
+	public void detectCollision(Player p, Obstacle o) {
+		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight())
+				|| p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()) 
+			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom())
+					|| p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom())
+				p.setDirection((p.getDirection()+180)%360);
+				
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		p1NotPressed();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+	
+		detectCollision(p1, o1);
+		detectCollision(p1, o2);
+		detectCollision(p1, o3);
+		detectCollision(p1, o4);
+		detectCollision(p2, o1);
+		detectCollision(p2, o2);
+		detectCollision(p2, o3);
+		detectCollision(p2, o4);
+
 		repaint();
-		p1.setX(p1.getX() + p1.getVelocity() * Math.acos(p1.getDirection() * (Math.PI / 180.)));
-		p1.setY(p1.getY() + p1.getVelocity() * Math.asin(p1.getDirection() * (Math.PI / 180.)));
+		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
+		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
+		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
+		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
+		tip.setX(p1.getLeft());
+		tip.setY(p1.getTop());
+		tip2.setX(p2.getLeft());
+		tip2.setY(p2.getTop());
 	}
-	
-	public void gotHit(){
-		// if player1 gets hit by tip
-		{
-			p1.setHealth(p1.getHealth()-1);
-			if (p1.getHealth() == 0){
-				//return screen Player 2 wins
-			}
-		}
-		
-		// if player2 gets hit by tip
-		{
-			//p2.setHealth(p2.getHealth()-1);
-				//if (p2.getHealth() == 0)
-					//return screen Player 1 wins
-						
-		}
-	}
-	
 }
