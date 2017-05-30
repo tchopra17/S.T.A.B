@@ -1,4 +1,4 @@
-
+import javax.swing.JPanel;
 
 public class Start {
 	
@@ -9,4 +9,5 @@ public class Start {
 		ref.addPanel(screen);
 		ref.initJFrame();
 	}
+	
 }

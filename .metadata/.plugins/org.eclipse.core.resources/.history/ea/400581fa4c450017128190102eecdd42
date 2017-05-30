@@ -130,10 +130,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void detectCollision(Player p, Obstacle o) {
 		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight()) || p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()){
 			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom()) || p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()){
-				double direction = p.getDirection();
-				if (direction > 270 && direction < 360){
-					System.out.println("4th quad");
-				}
+				p.setDirection((p.getDirection()+180)%360);
 			}
 		}
 	}

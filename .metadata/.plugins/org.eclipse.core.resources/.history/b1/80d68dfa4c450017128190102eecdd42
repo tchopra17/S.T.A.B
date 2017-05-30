@@ -1,4 +1,4 @@
-
+import javax.swing.JPanel;
 
 public class Start {
 	
@@ -6,7 +6,8 @@ public class Start {
 		GameScreen ref=new GameScreen();
 		World screen = new World();
 		MainMenu mm = new MainMenu();
-		ref.addPanel(screen);
+		ref.addPanel(mm);
 		ref.initJFrame();
 	}
+	
 }
