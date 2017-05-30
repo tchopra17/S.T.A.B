@@ -23,11 +23,28 @@ public class Obstacle {
 		this.y = y;
 	}
 
-	public double getX() {
+	public double getLeft() {
 		return x;
 	}
 
-	public double getY() {
+	public double getRight() {
+		return x + width;
+	}
+	
+	public double getTop() {
 		return y;
+	}
+	
+	public double getBottom(){
+		return y + height;
+	}
+	
+	
+	public double getWidth(){
+		return width;
+	}
+	
+	public double getHeight(){
+		return height;
 	}
 }
