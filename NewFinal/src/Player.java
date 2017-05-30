@@ -4,12 +4,11 @@ public class Player extends Object {
 	private double velocity, deaccel, direction;
 	private int health;
 
-	public Player(double x, double y, double height, double width, double direction) {
+	public Player(double x, double y, double height, double width, double direction, int health) {
 		super(x, y, width, height);
 		this.direction = direction;
-		deaccel = 1;
 		velocity = 0;
-		health = 0;
+		this.health = health;
 	}
 
 	public void accelerate() {
@@ -21,7 +20,7 @@ public class Player extends Object {
 
 	public void deaccelerate() {
 		if (velocity != 0)
-			velocity = velocity - deaccel;
+			velocity = velocity - 1;
 		else
 			velocity = 0;
 	}
@@ -49,5 +48,19 @@ public class Player extends Object {
 	public void setVelocity(double v) {
 		velocity = v;
 	}
+	
+	public void setHealth(int health) {
+		this.health = health;
+	}
 
+	public int getHealth() {
+		return health;
+	}
 }
+	
+	
+	
+	
+	
+	
+	

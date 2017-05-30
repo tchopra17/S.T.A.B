@@ -16,6 +16,13 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	Obstacle o2;
 	Obstacle o3;
 	Obstacle o4;
+	// borders
+	Obstacle b1;
+	Obstacle b2;
+	Obstacle b3;
+	Obstacle b4;
+	GameScreen g;
+
 	boolean isKeyPressedP1;
 	boolean isKeyPressedP2;
 	Tip tip;
@@ -24,73 +31,101 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public World() {
 		t = new Timer(5, this);
 		t.start();
-		
+		g = new GameScreen();
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
-		
-		p1 = new Player(0, 0, 30, 30, 0);
-		p2 = new Player(200, 200, 30, 30, 0);
-		
-		o1 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-		o2 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-		o3 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-		o4 = new Obstacle((int) (500 * Math.random() + 50), (int) (500 * Math.random() + 50), (int)(60 * Math.random() + 20), (int)(60 * Math.random() + 20));
-		
-		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2)-10), 70, 10, 0);
-		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2)-10), 70, 10, 0);
+
+		p1 = new Player(50, 50, 30, 30, 0, 5);
+		p2 = new Player(g.returnWidth() - 50, g.returnWidth() - 50, 30, 30, 0, 5);
+
+		int w = g.returnWidth();
+		int h = g.returnHeight();
+		o1 = new Obstacle((int) ((w - 100) * Math.random() + 50), (int) ((h - 100) * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		o2 = new Obstacle((int) ((w - 100) * Math.random() + 50), (int) ((h - 100) * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		o3 = new Obstacle((int) ((w - 100) * Math.random() + 50), (int) ((h - 100) * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+		o4 = new Obstacle((int) ((w - 100) * Math.random() + 50), (int) ((h - 100) * Math.random() + 50),
+				(int) (60 * Math.random() + 20), (int) (60 * Math.random() + 20));
+
+		b1 = new Obstacle(0, 0, 20, w);
+		b2 = new Obstacle(0, h, 20, w + 20);
+		b3 = new Obstacle(0, 0, h, 20);
+		b4 = new Obstacle(w, 0, h, 20);
+
+		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 70, 10, 0);
+		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 70, 10, 0);
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
-		
-		g2.rotate(p1.getDirection()*Math.PI/180,p1.getLeft()+p1.getWidth()/2,p1.getTop()+p1.getHeight()/2);
+
+		g2.rotate(p1.getDirection() * Math.PI / 180, p1.getLeft() + p1.getWidth() / 2,
+				p1.getTop() + p1.getHeight() / 2);
 		g2.fill(p1.returnPlayer());
 		g2.fill(tip.returnPlayer());
 		g2.setTransform(old);
-		
-		g2.rotate(p2.getDirection()*Math.PI/180,p2.getLeft()+p2.getWidth()/2,p2.getTop()+p2.getHeight()/2);
+
+		g2.rotate(p2.getDirection() * Math.PI / 180, p2.getLeft() + p2.getWidth() / 2,
+				p2.getTop() + p2.getHeight() / 2);
 		g2.fill(p2.returnPlayer());
 		g2.fill(tip2.returnPlayer());
 		g2.setTransform(old);
-		
+
 		g2.fill(o1.returnPlayer());
 		g2.fill(o2.returnPlayer());
 		g2.fill(o3.returnPlayer());
 		g2.fill(o4.returnPlayer());
+
+		g2.fill(b1.returnPlayer());
+		g2.fill(b2.returnPlayer());
+		g2.fill(b3.returnPlayer());
+		g2.fill(b4.returnPlayer());
+
 	}
-	
-	public void upPressed(){
+
+	public void upPressed() {
 		p1.accelerate();
 	}
-	public void downPressed(){
+
+	public void downPressed() {
 		p1.deaccelerate();
 	}
-	public void rightPressed(){
+
+	public void rightPressed() {
 		p1.turnRight();
 	}
-	public void leftPressed(){
+
+	public void leftPressed() {
 		p1.turnLeft();
 	}
-	public void wPressed(){
+
+	public void wPressed() {
 		p2.accelerate();
 	}
-	public void sPressed(){
+
+	public void sPressed() {
 		p2.deaccelerate();
 	}
-	public void dPressed(){
+
+	public void dPressed() {
 		p2.turnRight();
 	}
-	public void aPressed(){
+
+	public void aPressed() {
 		p2.turnLeft();
 	}
-	public void p1NotPressed(){
+
+	public void p1NotPressed() {
 		p1.deaccelerate();
 	}
-	public void p2NotPressed(){
+
+	public void p2NotPressed() {
 		p2.deaccelerate();
 	}
 
@@ -127,11 +162,14 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 		p1NotPressed();
 	}
+
 	public void detectCollision(Player p, Obstacle o) {
-		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight()) || p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()){
-			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom()) || p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()){
+		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight())
+				|| p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()) {
+			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom())
+					|| p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()) {
 				double direction = p.getDirection();
-				if (direction > 270 && direction < 360){
+				if (direction > 270 && direction < 360) {
 					System.out.println("4th quad");
 				}
 			}
@@ -150,14 +188,14 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		detectCollision(p2, o2);
 		detectCollision(p2, o3);
 		detectCollision(p2, o4);
-		
+
 		repaint();
-		
-		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI/180.)));
-		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI/180.)));
-		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI/180.)));
-		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI/180.)));
-		
+
+		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
+		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
+		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
+		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
+
 		tip.setX(p1.getLeft());
 		tip.setY(p1.getTop());
 		tip2.setX(p2.getLeft());
