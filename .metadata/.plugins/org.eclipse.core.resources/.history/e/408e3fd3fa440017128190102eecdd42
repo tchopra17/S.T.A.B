@@ -11,7 +11,8 @@ public class Player extends Object {
 		velocity=0;
 		health=0;
 	}
-	
+
+
 	public void accelerate(){
 		if(velocity!=5)
 			velocity=velocity+1;

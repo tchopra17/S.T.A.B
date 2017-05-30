@@ -123,11 +123,12 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		p1NotPressed();
 	}
 	public void detectCollision(Player p, Obstacle o) {
-		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight()) || p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()){
-			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom()) || p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()){
+		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight())
+				|| p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()) 
+			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom())
+					|| p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom())
 				p.setDirection((p.getDirection()+180)%360);
-			}
-		}
+				
 	}
 
 	@Override

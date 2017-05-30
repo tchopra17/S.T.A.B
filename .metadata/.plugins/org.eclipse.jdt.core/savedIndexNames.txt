@@ -22,7 +22,6 @@ INDEX VERSION 1.130+/Users/tusharchopra/Desktop/Tushar/Development/Apps/S.T.A.B/
 1931402068.index
 2979435446.index
 527849843.index
-2747880423.index
 3358580009.index
 2117113611.index
 156905802.index
