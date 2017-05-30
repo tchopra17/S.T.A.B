@@ -71,6 +71,13 @@ public class MainMenu extends JPanel {
 			}
 		});
 		
+		instructionButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 		quitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
