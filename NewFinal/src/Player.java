@@ -1,14 +1,17 @@
+package Finalp;
+
 import java.awt.Rectangle;
 
 public class Player extends Object {
 	private double velocity, deaccel, direction;
 	private int health;
 
-	public Player(double x, double y, double height, double width, double direction, int health) {
+	public Player(double x, double y, double height, double width, double direction) {
 		super(x, y, width, height);
 		this.direction = direction;
+		deaccel = 1;
 		velocity = 0;
-		this.health = health;
+		health = 0;
 	}
 
 	public void accelerate() {
@@ -20,7 +23,7 @@ public class Player extends Object {
 
 	public void deaccelerate() {
 		if (velocity != 0)
-			velocity = velocity - 1;
+			velocity = velocity - deaccel;
 		else
 			velocity = 0;
 	}
@@ -48,19 +51,5 @@ public class Player extends Object {
 	public void setVelocity(double v) {
 		velocity = v;
 	}
-	
-	public void setHealth(int health) {
-		this.health = health;
-	}
 
-	public int getHealth() {
-		return health;
-	}
 }
-	
-	
-	
-	
-	
-	
-	

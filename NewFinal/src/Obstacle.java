@@ -1,3 +1,5 @@
+package Finalp;
+
 import java.awt.Rectangle;
 
 public class Obstacle extends Object{

@@ -1,3 +1,5 @@
+package Finalp;
+
 import java.awt.Rectangle;
 
 public class Tip {
@@ -32,4 +34,3 @@ public class Tip {
 	}
 	
 }
-
