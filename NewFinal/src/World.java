@@ -12,19 +12,23 @@ import javax.swing.*;
 
 public class World extends JPanel implements KeyListener, ActionListener {
 	Timer t;
+	
 	Player p1;
 	Player p2;
+	
 	Obstacle o1;
 	Obstacle o2;
+	
 	// borders
 	Obstacle b1;
 	Obstacle b2;
 	Obstacle b3;
 	Obstacle b4;
+	
 	GameScreen g;
-
-	ArrayList<Obstacle> oList;
-	ArrayList<Obstacle> bList;
+	
+	ArrayList<Obstacle> oList; //Obstacle List
+	ArrayList<Obstacle> bList; //Border List
 
 	boolean isKeyPressedP1;
 	boolean isKeyPressedP2;
@@ -73,25 +77,28 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		t.start();
 		
 	}
-
+	//Draws World
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
-
+		
+		//Draws Player 1
 		g2.rotate(p1.getDirection() * Math.PI / 180, p1.getLeft() + p1.getWidth() / 2,
 				p1.getTop() + p1.getHeight() / 2);
 		g2.fill(p1.returnPlayer());
 		g2.fill(tip.returnPlayer());
 		g2.setTransform(old);
 
+		//Draws Player 2
 		g2.rotate(p2.getDirection() * Math.PI / 180, p2.getLeft() + p2.getWidth() / 2,
 				p2.getTop() + p2.getHeight() / 2);
 		g2.fill(p2.returnPlayer());
 		g2.fill(tip2.returnPlayer());
 		g2.setTransform(old);
 
+		//Draws Obstacles
 		for (Obstacle o : oList) {
 			g2.fill(o.returnPlayer());
 		}
@@ -102,7 +109,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		g2.fill(b4.returnPlayer());
 
 	}
-
+	//Button methods
 	public void upPressed() {
 		p1.accelerate();
 	}
@@ -145,7 +152,6 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -174,6 +180,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		// p1NotPressed();
 	}
 
+	//Collision Detection
 	public void detectCollision(Player p, Obstacle o) {
 		double direction = p.getDirection();
 
@@ -192,7 +199,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 			}
 		}
 	}
-
+	
+	//Called every time timer fires
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
