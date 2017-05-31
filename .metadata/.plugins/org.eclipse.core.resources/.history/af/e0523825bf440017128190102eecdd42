@@ -1,0 +1,48 @@
+import javax.swing.*;
+import java.awt.Font;
+
+public class MainMenu extends JPanel {
+	private Font titleFont;
+	private Font subFont;
+	private Font authorFont;
+	private String title;
+	private String subtitle;
+	private String authors;
+	private int buttonW;
+	private int buttonH;
+	private int spacing;
+	private JButton playButton;
+	private JButton instructionButton;
+	private JButton quitButton;
+	final int SCREEN_WIDTH = 600;
+	
+	public MainMenu(){
+		titleFont = new Font("Bebas Neue Regular", Font.BOLD, 100);
+		subFont = new Font("Bebas Neue Regular", Font.PLAIN, 28);
+		authorFont = new Font("Bebas Neue Regular", Font.PLAIN, 22);
+		
+		title = "S.T.A.B.";
+		subtitle = "Sharp Tips Action Battle";
+		authors = "J. Bao, T. Chopra, R. Miller, K. Wang";
+		
+		buttonW = 220;
+		buttonH = 60;
+		spacing = 90;
+		
+		playButton = new JButton("Play");
+		playButton.setBounds(SCREEN_WIDTH / 2 - buttonW / 2 , 220, buttonW, buttonH);
+		
+		instructionButton = new JButton("Instructions");
+		instructionButton.setBounds(SCREEN_WIDTH / 2 - buttonW / 2 ,
+				playButton.getY() + spacing, buttonW, buttonH);
+		
+		quitButton = new JButton("Quit");
+		quitButton.setBounds(SCREEN_WIDTH / 2 - buttonW / 2,
+				instructionButton.getY() + spacing, buttonW, buttonH);
+		
+		add(playButton);
+		add(instructionButton);
+		add(quitButton);
+	}
+	
+}

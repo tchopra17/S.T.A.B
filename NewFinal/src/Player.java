@@ -1,12 +1,15 @@
+
+import java.awt.Rectangle;
+
 public class Player extends Object {
-	private double velocity, direction;
+	private double velocity, deaccel, direction;
 	private int health;
 
-	public Player(double x, double y, double height, double width, double direction) {
+	public Player(double x, double y, double height, double width, double direction, int health) {
 		super(x, y, width, height);
 		this.direction = direction;
 		velocity = 0;
-		health = 0;
+		this.health = health;
 	}
 
 	public void accelerate() {
@@ -22,7 +25,7 @@ public class Player extends Object {
 		else
 			velocity = 0;
 	}
-	
+  
 	public void stop(){
 		long time1=System.currentTimeMillis();
 		long time2;
