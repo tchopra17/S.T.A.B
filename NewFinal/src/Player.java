@@ -1,3 +1,4 @@
+
 import java.awt.Rectangle;
 
 public class Player extends Object {
@@ -12,17 +13,27 @@ public class Player extends Object {
 	}
 
 	public void accelerate() {
-		if (velocity != 5)
+		if (velocity <= 5)
 			velocity = velocity + 1;
 		else
 			velocity = 5;
 	}
 
 	public void deaccelerate() {
-		if (velocity != 0)
+		if (velocity >= 0)
 			velocity = velocity - 1;
 		else
 			velocity = 0;
+	}
+  
+	public void stop(){
+		long time1=System.currentTimeMillis();
+		long time2;
+		while(velocity>0){
+			time2=System.currentTimeMillis();
+			if(time2-time1==5)
+				deaccelerate();
+		}
 	}
 
 	public double getVelocity() {
@@ -30,11 +41,11 @@ public class Player extends Object {
 	}
 
 	public void turnLeft() {
-		direction = (direction - 10) + 360.;
+		direction = (direction +350.);
 	}
 
 	public void turnRight() {
-		direction = (direction + 10) + 360.;
+		direction = (direction + 10.);
 	}
 
 	public double getDirection() {
@@ -49,18 +60,12 @@ public class Player extends Object {
 		velocity = v;
 	}
 	
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	public int getHealth() {
+	public int getHealth(){
 		return health;
 	}
+	
+	public void setHealth(int h){
+		health=h;
+	}
+
 }
-	
-	
-	
-	
-	
-	
-	

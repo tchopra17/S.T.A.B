@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
+
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -29,9 +30,6 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	
 	ArrayList<Obstacle> oList; //Obstacle List
 	ArrayList<Obstacle> bList; //Border List
-
-	boolean isKeyPressedP1;
-	boolean isKeyPressedP2;
 
 	Tip tip;
 	Tip tip2;
@@ -68,7 +66,6 @@ public class World extends JPanel implements KeyListener, ActionListener {
 					(int) (60 * Math.random() + 60), (int) (60 * Math.random() + 60));
 			oList.add(o1);
 		}
-		
 	
 		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 70, 10, 0);
 		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 70, 10, 0);
@@ -83,7 +80,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
-		
+
 		//Draws Player 1
 		g2.rotate(p1.getDirection() * Math.PI / 180, p1.getLeft() + p1.getWidth() / 2,
 				p1.getTop() + p1.getHeight() / 2);
@@ -107,7 +104,6 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		g2.fill(b2.returnPlayer());
 		g2.fill(b3.returnPlayer());
 		g2.fill(b4.returnPlayer());
-
 	}
 	//Button methods
 	public void upPressed() {
@@ -120,10 +116,12 @@ public class World extends JPanel implements KeyListener, ActionListener {
 
 	public void rightPressed() {
 		p1.turnRight();
+		System.out.println(p1.getDirection());
 	}
 
 	public void leftPressed() {
 		p1.turnLeft();
+		System.out.println(p1.getDirection());
 	}
 
 	public void wPressed() {
@@ -140,6 +138,12 @@ public class World extends JPanel implements KeyListener, ActionListener {
 
 	public void aPressed() {
 		p2.turnLeft();
+	}
+	public void p1NotPressed(){
+		p1.stop();
+	}
+	public void p2NotPressed(){
+		p2.stop();
 	}
 
 	/*
@@ -177,7 +181,21 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		// p1NotPressed();
+		int key=e.getKeyCode();
+		if(key == KeyEvent.VK_UP||key == KeyEvent.VK_DOWN||key == KeyEvent.VK_LEFT||key == KeyEvent.VK_RIGHT)
+			p1NotPressed();
+		else if(key == KeyEvent.VK_W||key == KeyEvent.VK_S||key == KeyEvent.VK_A||key == KeyEvent.VK_D)
+			p2NotPressed();
+	}
+	public void detectCollision(Player p, Obstacle o) {
+		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight()) || p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()){
+			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom()) || p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()){
+				double direction = p.getDirection();
+				if (direction > 270 && direction < 360){
+					System.out.println("4th quad");
+				}
+			}
+		}
 	}
 
 	//Collision Detection
@@ -204,6 +222,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+
 
 		for (Obstacle o : oList)
 			detectCollision(p1, o);

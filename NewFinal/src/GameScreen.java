@@ -1,7 +1,6 @@
 
 
 import javax.swing.*;
-
 public class GameScreen extends JFrame {
 	JPanel ref;
 	final int SCREEN_WIDTH = 600, SCREEN_HEIGHT = 700;
@@ -15,7 +14,6 @@ public class GameScreen extends JFrame {
 		setSize(SCREEN_HEIGHT, SCREEN_WIDTH);
 		setVisible(true);
 	}
-
 	public void addPanel(JPanel temp) {
 		ref = temp;
 		add(ref);
