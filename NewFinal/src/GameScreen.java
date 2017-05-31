@@ -9,8 +9,8 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 public class GameScreen extends JFrame{
-	World ref;
-	final int SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 1000;
+	JPanel ref;
+	final int SCREEN_WIDTH = 10000, SCREEN_HEIGHT = 10000;
 	
 	public GameScreen(){
 		ref=null;
@@ -21,8 +21,19 @@ public class GameScreen extends JFrame{
 		setVisible(true);
 	}
 	
-	public void setWorld(World temp){
+	public void addPanel(JPanel temp){
 		ref=temp;
 		add(ref);
+		repaint();
+	    revalidate();
+	}
+	public void removePanel(){
+		remove(ref);
+		repaint();
+	    revalidate();
+	}
+	
+	public int returnWidth(){
+		return SCREEN_WIDTH;
 	}
 }
