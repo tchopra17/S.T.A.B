@@ -30,11 +30,11 @@ public class Player extends Object {
 	}
 
 	public void turnLeft() {
-		direction = (direction - 10);
+		direction = (direction - 10) + 360.;
 	}
 
 	public void turnRight() {
-		direction = (direction + 10);
+		direction = (direction + 10) + 360.;
 	}
 
 	public double getDirection() {
