@@ -1,91 +1,60 @@
 import java.awt.Rectangle;
-import javax.swing.Timer;
-public class Player {
-	private double x, y, height, width, velocity, deaccel, direction;
+
+public class Player extends Object {
+	private double velocity, deaccel, direction;
 	private int health;
 
-	public Player(double x, double y, double height, double width, double direction) {
-		this.x = x;
-		this.y = y;
-		this.height = height;
-		this.width = width;
-		this.direction=direction;
-		deaccel=1;
-		velocity=0;
-		health=0;
+	public Player(double x, double y, double height, double width, double direction, int health) {
+		super(x, y, width, height);
+		this.direction = direction;
+		velocity = 0;
+		this.health = health;
 	}
 
-	public Rectangle returnPlayer() {
-		Rectangle rect = new Rectangle((int) x,(int) y,(int) height, (int) width);
-		return rect;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public double getLeft() {
-		return x;
-	}
-
-	public double getRight() {
-		return x + width;
-	}
-	
-	public double getTop() {
-		return y;
-	}
-	
-	public double getBottom(){
-		return y + height;
-	}
-	
-	public void accelerate(){
-		if(velocity!=5)
-			velocity=velocity+1;
+	public void accelerate() {
+		if (velocity != 5)
+			velocity = velocity + 1;
 		else
-			velocity=5;
+			velocity = 5;
 	}
-	
-	public void deaccelerate(){
-		if(velocity!=0)
-			velocity=velocity-deaccel;
+
+	public void deaccelerate() {
+		if (velocity != 0)
+			velocity = velocity - 1;
 		else
-			velocity=0;
+			velocity = 0;
 	}
-	
-	public double getVelocity(){
+
+	public double getVelocity() {
 		return velocity;
 	}
-	
-	public void turnLeft(){
-		direction=(direction-10);
-	}
-	
-	public void turnRight(){
-		direction=(direction+10);
-	}
-	
-	public double getDirection(){
-		return direction%360.;
-	}
-	
-	public void setDirection(double direction){
-		this.direction = direction;
-	}
-	
-	public double getWidth(){
-		return width;
-	} 
-	public double getHeight(){
-		return height;
-	}
-	public void setVelocity(double v){
-		velocity = v;
+
+	public void turnLeft() {
+		direction = (direction - 10) + 360.;
 	}
 
+	public void turnRight() {
+		direction = (direction + 10) + 360.;
+	}
+
+	public double getDirection() {
+		return direction % 360.;
+	}
+
+	public void setDirection(double direction) {
+		this.direction = direction;
+	}
+
+	public void setVelocity(double v) {
+		velocity = v;
+	}
+	
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public int getHealth() {
+		return health;
+	}
 }
+	
