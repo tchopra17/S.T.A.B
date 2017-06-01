@@ -21,7 +21,6 @@ public class Instructions extends JPanel {
 	private JButton MainMenuButton;
 	private JButton playButton;
 	private JButton quitButton;
-	private String  in, ins,inst,instr,instru,instruc,instruct;
 	World w;
 	
 	public Instructions(){
@@ -33,13 +32,7 @@ public class Instructions extends JPanel {
 
 		buttonW = 150;
 		buttonH = 60;
-		spacing = 90;
-		
-		in = "- Move player one using the arrow keys.\n"
-				+ "- Move player two using the WASD keys.\n"
-				+ "- Use the left and right keys to change \nthe facing of the player then use the up \nkey to move the player forward."
-				+ "- You may pause the game at any time and \nhealth is displayed in the top corners.";
-				
+		spacing = 90;	
 		
 		title = new JLabel("S.T.A.B.", SwingConstants.CENTER);
 		title.setFont(titleFont);
