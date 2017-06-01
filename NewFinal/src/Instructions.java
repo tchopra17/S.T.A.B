@@ -39,7 +39,7 @@ public class Instructions extends JPanel {
 		title.setSize(g.returnWidth(), 100);
 		title.setLocation(0, 0);
 		
-		subtitle = new JLabel(instruct, SwingConstants.CENTER);
+		subtitle = new JLabel("Instructions", SwingConstants.CENTER);
 		subtitle.setFont(subFont);
 		subtitle.setSize(g.returnWidth(), 50);
 		subtitle.setLocation(0, subtitle.getHeight() + 50);
