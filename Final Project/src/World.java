@@ -72,8 +72,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 			oList.add(o1);
 		}
 
-		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 70, 10, 0);
-		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 70, 10, 0);
+		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 3, 70, 0);
+		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 3, 70, 0);
 
 		t = new Timer(5, this);
 		t.start();
@@ -86,14 +86,13 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
-
 		// Draws Player 1
 		g2.rotate(p1.getDirection() * Math.PI / 180, p1.getLeft() + p1.getWidth() / 2,
 				p1.getTop() + p1.getHeight() / 2);
 		g2.fill(p1.returnPlayer());
 		g2.fill(tip.returnPlayer());
 		g2.setTransform(old);
-
+		
 		// Draws Player 2
 		g2.rotate(p2.getDirection() * Math.PI / 180, p2.getLeft() + p2.getWidth() / 2,
 				p2.getTop() + p2.getHeight() / 2);
@@ -221,12 +220,24 @@ public class World extends JPanel implements KeyListener, ActionListener {
 
 		repaint();
 
+		/*setPosition(p1);
+		 * setPosition(p1); 
+		 */
+		
 		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
 		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
 		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
 		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
 
-		tip.setPosition(p1.getLeft(), p1.getTop() + 0.35 * p1.getHeight());
-		tip2.setPosition(p2.getLeft(), p2.getTop() + 0.35 * p2.getHeight());
+		tip.setPosition(p1.getLeft(), p1.getTop() + p1.getHeight()/2 - tip.getWidth()/2);
+		tip2.setPosition(p2.getLeft(), p2.getTop() + p2.getHeight()/2 - tip.getWidth()/2);
 	}
+	
+	
+		/*public void setPosition(Object o){
+			o.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
+			o.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
+
+		}
+		*/
 }

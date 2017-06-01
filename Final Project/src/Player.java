@@ -1,48 +1,33 @@
 import java.awt.Rectangle;
-import javax.swing.Timer;
+import java.awt.Color;
 
-public class Player {
-	private double x, y, height, width, velocity, deaccel, direction;
+
+import javax.swing.*;
+
+public class Player extends Object {
+	private double velocity, deaccel, direction;
 	private int health;
-
+	private String color;
+	
 	public Player(double x, double y, double height, double width, double direction, int health) {
-		this.x = x;
-		this.y = y;
-		this.height = height;
-		this.width = width;
+		super(x, y, width, height);
 		this.direction = direction;
-		this.health = health;
-		deaccel = 1;
 		velocity = 0;
-	}
-
-	public Rectangle returnPlayer() {
-		Rectangle rect = new Rectangle((int) x, (int) y, (int) height, (int) width);
-		return rect;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
+		this.health = health;
 	}
 
 	public void accelerate() {
-		velocity = velocity + 1;
+		if (velocity != 5)
+			velocity = velocity + 1;
+		else
+			velocity = 5;
 	}
 
 	public void deaccelerate() {
-		velocity = velocity - deaccel;
+		if (velocity != 0)
+			velocity = velocity - 1;
+		else
+			velocity = 0;
 	}
 
 	public double getVelocity() {
@@ -50,22 +35,35 @@ public class Player {
 	}
 
 	public void turnLeft() {
-		direction = (direction - 5) % 360.;
+		direction = (direction - 10) + 360.;
 	}
 
 	public void turnRight() {
-		direction = (direction + 5) % 360.;
+		direction = (direction + 10) + 360.;
 	}
 
 	public double getDirection() {
-		return direction;
+		return direction % 360.;
 	}
 
+	public void setDirection(double direction) {
+		this.direction = direction;
+	}
+
+	public void setVelocity(double v) {
+		velocity = v;
+	}
+	
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
+	
+	public void setColor(){
+		
+	}
 }
+	
