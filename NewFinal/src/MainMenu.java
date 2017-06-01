@@ -1,9 +1,15 @@
+package Finalp;
 import javax.swing.*;
+
+import Finalp.World;
+
 import java.awt.Font;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends JPanel{
 	private Font titleFont;
 	private Font subFont;
 	private Font authorFont;
@@ -30,7 +36,7 @@ public class MainMenu extends JPanel {
 		spacing = 90;
 		
 		
-		title = new JLabel("S.T.A.B", SwingConstants.CENTER);
+		title = new JLabel("S.T.A.B.", SwingConstants.CENTER);
 		title.setFont(titleFont);
 		title.setSize(g.returnWidth(), 100);
 		title.setLocation(0, 0);
@@ -67,13 +73,20 @@ public class MainMenu extends JPanel {
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				GameScreen ref=new GameScreen();
+				World game = new World();
+				ref.addPanel(game);
+				ref.initJFrame();
 			}
 		});
+		
 		instructionButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				GameScreen ref=new GameScreen();
+				Instructions in = new Instructions();
+				ref.addPanel(in);
+				ref.initJFrame();
 			}
 		});
 		
