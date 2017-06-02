@@ -1,27 +1,25 @@
 
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 public class GameScreen extends JFrame {
+	double width;
+	double height;
 	JPanel ref;
-	final int SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 700;
-	
+	final int SCREEN_WIDTH = 1100, SCREEN_HEIGHT = 700;
+
 	public GameScreen() {
 		ref = null;
 	}
 
-	public void initJFrame() throws IOException {
+	public void initJFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(SCREEN_HEIGHT, SCREEN_WIDTH);
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
-		setLayout(null);
+		
 	}
 	public void addPanel(JPanel temp) {
 		ref = temp;
@@ -43,4 +41,5 @@ public class GameScreen extends JFrame {
 	public int returnHeight() {
 		return SCREEN_HEIGHT;
 	}
+
 }

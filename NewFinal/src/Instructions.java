@@ -1,12 +1,11 @@
+
+
+import javax.swing.*;
+
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 public class Instructions extends JPanel {
 	private Font titleFont;
@@ -76,12 +75,7 @@ public class Instructions extends JPanel {
 				GameScreen ref=new GameScreen();
 				MainMenu menu = new MainMenu();
 				ref.addPanel(menu);
-				try {
-					ref.initJFrame();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				ref.initJFrame();
 			}
 		});
 		
@@ -89,15 +83,9 @@ public class Instructions extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GameScreen ref=new GameScreen();
-				World game;
-				try {
-					game = new World();
-					ref.addPanel(game);
-					ref.initJFrame();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				World game = new World();
+				ref.addPanel(game);
+				ref.initJFrame();
 			}
 		});
 		
