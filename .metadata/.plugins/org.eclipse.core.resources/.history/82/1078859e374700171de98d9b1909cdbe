@@ -1,0 +1,13 @@
+import java.io.IOException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+public class PlayScreen extends JPanel{
+
+	public PlayScreen() throws IOException {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(new World());
+		add(new HealthPanel());
+	}
+}

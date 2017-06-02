@@ -1,0 +1,48 @@
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+public class HealthPanel extends JPanel {
+
+	BufferedImage heart;
+	int lives = 5;
+	ArrayList<JLabel> hList; // Heart list
+
+	public HealthPanel() throws IOException {
+		hList = new ArrayList<JLabel>();
+		setLAyout(null);
+		heart = ImageIO.read(new File("/Users/tusharchopra/Desktop/Tushar/Development/Apps/S.T.A.B/Tumblr_static_heart.png"));
+		setSize(1000, 60);
+		for (int i = 1; i <= lives; i++) {
+			JLabel picLabel = new JLabel(new ImageIcon(resize(heart, 30, 30)), SwingConstants.RIGHT);
+			picLabel.setSize(1000, 30);
+			picLabel.setLocation(0, 500);
+			hList.add(picLabel);
+		}
+	}
+	
+	public ArrayList returnList(){
+		return hList;
+	}
+	public int returnLives(){
+		return lives;
+	}
+	// This is not our code
+	public static BufferedImage resize(BufferedImage image, int width, int height) {
+		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+		Graphics2D g2d = (Graphics2D) bi.createGraphics();
+		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.dispose();
+		return bi;
+	}
+}

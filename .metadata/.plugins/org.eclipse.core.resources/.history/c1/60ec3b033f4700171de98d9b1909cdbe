@@ -1,0 +1,71 @@
+
+
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+public class GameScreen extends JFrame {
+	JPanel ref;
+	final int SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 700;
+	BufferedImage heart;
+	int lives;
+
+	public GameScreen() {
+		ref = null;
+		lives = 5;
+	}
+
+	public void initJFrame() throws IOException {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(SCREEN_HEIGHT, SCREEN_WIDTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setUndecorated(true);
+		setVisible(true);
+		setLayout(null);
+
+		heart = ImageIO.read(new File("/Users/tusharchopra/Desktop/Tushar/Development/Apps/S.T.A.B/Tumblr_static_heart.png"));
+		JLabel pic = new JLabel(new ImageIcon(resize(heart, 30, 30)), SwingConstants.RIGHT);
+		pic.setLocation(0, 710);
+		pic.setSize(100, 60);
+		add(pic);
+	}
+	public void addPanel(JPanel temp) {
+		ref = temp;
+		add(ref);
+		repaint();
+		revalidate();
+	}
+
+	public void removePanel() {
+		remove(ref);
+		repaint();
+		revalidate();
+	}
+
+	public int returnWidth() {
+		return SCREEN_WIDTH;
+	}
+
+	public int returnHeight() {
+		return SCREEN_HEIGHT;
+	}
+	
+	public int getLives(){
+		return lives;
+	}
+
+	// This is not our code
+	public static BufferedImage resize(BufferedImage image, int width, int height) {
+		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+		Graphics2D g2d = (Graphics2D) bi.createGraphics();
+		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.dispose();
+		return bi;
+	}
+
+}

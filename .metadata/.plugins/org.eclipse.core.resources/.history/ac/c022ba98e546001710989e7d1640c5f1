@@ -1,0 +1,275 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+public class World extends JPanel implements KeyListener, ActionListener {
+	Timer t;
+	
+	Player p1;
+	Player p2;
+	
+	Obstacle o1;
+	Obstacle o2;
+	
+	// borders
+	Obstacle b1;
+	Obstacle b2;
+	Obstacle b3;
+	Obstacle b4;
+	
+	GameScreen g;
+	
+	BufferedImage heart;
+	int lives = 5;
+	
+	ArrayList<Obstacle> oList; //Obstacle List
+	ArrayList<Obstacle> bList; //Border List
+	ArrayList<JLabel> hList; //Heart list
+	
+	Tip tip;
+	Tip tip2;
+	
+	int w;
+	int h;
+
+	public World() throws IOException {
+		
+		g = new GameScreen();
+
+		addKeyListener(this);
+		setFocusable(true);
+		setFocusTraversalKeysEnabled(true);
+		
+		w = g.returnWidth();
+		h = g.returnHeight();
+
+		p1 = new Player(50, 50, 30, 30, 0, 5);
+		p2 = new Player(w - 150, h - 150, 30, 30, 180, 5);
+
+		b1 = new Obstacle(0, 0, 20, w);
+		b2 = new Obstacle(0, h - 100, 20, w + 20);
+		b3 = new Obstacle(0, 0, h - 100, 20);
+		b4 = new Obstacle(w, 0, h - 100, 20);
+
+		
+		oList = new ArrayList<Obstacle>();
+		bList = new ArrayList<Obstacle>();
+		
+		bList.add(b1);
+		bList.add(b2);
+		bList.add(b3);
+		bList.add(b4);
+		
+		hList = new ArrayList<JLabel>();
+		heart = ImageIO.read(new File("/Users/tusharchopra/Desktop/Tushar/Development/Apps/S.T.A.B/Tumblr_static_heart.png"));
+		
+		for(int i = 1; i <= lives; i++){
+			JLabel picLabel = new JLabel(new ImageIcon(resize(heart, 30, 30)));
+			picLabel.setLocation(i*30, g.getHeight() - 30);
+			add(picLabel);
+			hList.add(picLabel);
+		}
+		while(oList.size() < 4) {
+			o1 = new Obstacle((int) ((w - 100) * Math.random() + 50), (int) ((h - 100) * Math.random() + 50),
+					(int) (60 * Math.random() + 60), (int) (60 * Math.random() + 60));
+			oList.add(o1);
+		}
+	
+		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 3, 70, 0);
+		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 3, 70, 0);
+		
+		t = new Timer(5, this);
+		t.start();
+		
+	}
+	//Draws World
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		AffineTransform old = g2.getTransform();
+
+		//Draws Player 1
+		g2.rotate(p1.getDirection() * Math.PI / 180, p1.getLeft() + p1.getWidth() / 2,
+				p1.getTop() + p1.getHeight() / 2);
+		g2.fill(p1.returnPlayer());
+		g2.fill(tip.returnPlayer());
+		g2.setTransform(old);
+
+		//Draws Player 2
+		g2.rotate(p2.getDirection() * Math.PI / 180, p2.getLeft() + p2.getWidth() / 2,
+				p2.getTop() + p2.getHeight() / 2);
+		g2.fill(p2.returnPlayer());
+		g2.fill(tip2.returnPlayer());
+		g2.setTransform(old);
+
+		//Draws Obstacles
+		for (Obstacle o : oList) {
+			g2.fill(o.returnPlayer());
+		}
+
+		g2.fill(b1.returnPlayer());
+		g2.fill(b2.returnPlayer());
+		g2.fill(b3.returnPlayer());
+		g2.fill(b4.returnPlayer());
+	}
+	//Button methods
+	public void upPressed() {
+		p1.accelerate();
+	}
+
+	public void downPressed() {
+		p1.deaccelerate();
+	}
+
+	public void rightPressed() {
+		p1.turnRight();
+	}
+
+	public void leftPressed() {
+		p1.turnLeft();
+	}
+
+	public void wPressed() {
+		p2.accelerate();
+	}
+
+	public void sPressed() {
+		p2.deaccelerate();
+	}
+
+	public void dPressed() {
+		p2.turnRight();
+	}
+
+	public void aPressed() {
+		p2.turnLeft();
+	}
+	public void p1NotPressed(){
+		p1.stop();
+	}
+	public void p2NotPressed(){
+		p2.stop();
+	}
+
+	/*
+	 * public void p1NotPressed() { p1.deaccelerate(); }
+	 * 
+	 * public void p2NotPressed() { p2.deaccelerate(); }
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_UP)
+			upPressed();
+		if (key == KeyEvent.VK_DOWN)
+			downPressed();
+		if (key == KeyEvent.VK_LEFT)
+			leftPressed();
+		if (key == KeyEvent.VK_RIGHT)
+			rightPressed();
+		if (key == KeyEvent.VK_W)
+			wPressed();
+		if (key == KeyEvent.VK_S)
+			sPressed();
+		if (key == KeyEvent.VK_A)
+			aPressed();
+		if (key == KeyEvent.VK_D)
+			dPressed();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		int key=e.getKeyCode();
+		if(key == KeyEvent.VK_UP||key == KeyEvent.VK_DOWN||key == KeyEvent.VK_LEFT||key == KeyEvent.VK_RIGHT)
+			p1NotPressed();
+		else if(key == KeyEvent.VK_W||key == KeyEvent.VK_S||key == KeyEvent.VK_A||key == KeyEvent.VK_D)
+			p2NotPressed();
+	}
+	
+	//Collision Detection
+	public void detectCollision(Player p, Object o) {
+		double direction = p.getDirection();
+
+		if (p.returnPlayer().intersects(o.returnPlayer())) {
+			if (p.getTop() >= (o.getTop() - (o.getHeight() / 2))) {
+				p.setDirection(270 + (90 - direction));
+			}
+			if (p.getLeft() < o.getLeft()) {
+				p.setDirection(0 + (180 - direction));
+			}
+			if (p.getRight() > o.getRight()) {
+				p.setDirection(180 + (0 - direction));
+			}
+			if (p.getTop() <= (o.getTop() + (o.getHeight() / 2))) {
+				p.setDirection(90 + (270 - direction));
+			}
+		}
+	}
+	
+	public void detectHits(Player p, Tip t){
+		if (t.returnPlayer().intersects(p.returnPlayer())){
+			hList.get(lives - 1).setVisible(false);
+			if (lives > 0)
+				lives--;
+				p.setDirection(p.getDirection() + 180);
+		}
+	}
+	//This is not our code
+	public static BufferedImage resize(BufferedImage image, int width, int height) {
+	    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+	    Graphics2D g2d = (Graphics2D) bi.createGraphics();
+	    g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+	    g2d.drawImage(image, 0, 0, width, height, null);
+	    g2d.dispose();
+	    return bi;
+	}
+	
+	//Called every time timer fires
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+
+		for (Obstacle o : oList)
+			detectCollision(p1, o);
+		for (Obstacle o : oList)
+			detectCollision(p2, o);
+		for (Obstacle b : bList)
+			detectCollision(p2, b);
+		for (Obstacle b : bList)
+			detectCollision(p1, b);
+		
+		detectHits(p1, tip2);
+		detectHits(p2, tip);
+		repaint();
+
+		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
+		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
+		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
+		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
+
+		tip.setPosition(p1.getLeft(), p1.getTop() + p1.getHeight()/2 - tip.getWidth()/2);
+		tip2.setPosition(p2.getLeft(), p2.getTop() + p2.getHeight()/2 - tip.getWidth()/2);
+	}
+}
