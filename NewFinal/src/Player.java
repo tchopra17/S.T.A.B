@@ -1,39 +1,48 @@
-
-import java.awt.Rectangle;
-
+import java.awt.Color;
 public class Player extends Object {
-	private double velocity, deaccel, direction;
+	private double velocity, direction;
 	private int health;
+	private Color c;
 
-	public Player(double x, double y, double height, double width, double direction, int health) {
+	public Player(double x, double y, double height, double width, double direction, int health, Color t) {
 		super(x, y, width, height);
 		this.direction = direction;
 		velocity = 0;
 		this.health = health;
+		c=t;
 	}
 
 	public void accelerate() {
-		if (velocity <= 5)
+		if (velocity < 5)
 			velocity = velocity + 1;
 		else
 			velocity = 5;
 	}
 
 	public void deaccelerate() {
-		if (velocity >= 0)
+		if (velocity > 0)
 			velocity = velocity - 1;
 		else
 			velocity = 0;
 	}
   
 	public void stop(){
-		long time1=System.currentTimeMillis();
-		long time2;
+		long a=System.currentTimeMillis();
+		long b;
 		while(velocity>0){
-			time2=System.currentTimeMillis();
-			if(time2-time1==5)
+			b=System.currentTimeMillis();
+			if((b-a)%10000.==0){
 				deaccelerate();
+			}
 		}
+	}
+	
+	public void setColor(Color t){
+		c=t;
+	}
+	
+	public Color getColor(){
+		return c;
 	}
 
 	public double getVelocity() {

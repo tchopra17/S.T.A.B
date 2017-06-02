@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.*;
 
@@ -33,6 +35,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 
 	Tip tip;
 	Tip tip2;
+	
+	boolean forward1=false, left1=false, right1=false, back1=false, forward2, left2, right2, back2;
 
 	public World() {
 		
@@ -42,8 +46,8 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
 
-		p1 = new Player(50, 50, 30, 30, 0, 5);
-		p2 = new Player(g.returnWidth() - 100, g.returnWidth() - 100, 30, 30, 0, 5);
+		p1 = new Player(50, 50, 30, 30, 0, 5, new Color(10, 5, 5));
+		p2 = new Player(g.returnWidth() - 100, g.returnWidth() - 100, 30, 30, 0, 5, new Color(5, 5, 10));
 
 		int w = g.returnWidth();
 		int h = g.returnHeight();
@@ -70,7 +74,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 70, 10, 0);
 		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 70, 10, 0);
 		
-		t = new Timer(5, this);
+		t = new Timer(20, this);
 		t.start();
 		
 	}
@@ -139,18 +143,15 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void aPressed() {
 		p2.turnLeft();
 	}
+	
 	public void p1NotPressed(){
 		p1.stop();
 	}
+	
 	public void p2NotPressed(){
 		p2.stop();
 	}
 
-	/*
-	 * public void p1NotPressed() { p1.deaccelerate(); }
-	 * 
-	 * public void p2NotPressed() { p2.deaccelerate(); }
-	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -159,43 +160,80 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_UP)
-			upPressed();
-		if (key == KeyEvent.VK_DOWN)
-			downPressed();
-		if (key == KeyEvent.VK_LEFT)
-			leftPressed();
-		if (key == KeyEvent.VK_RIGHT)
-			rightPressed();
-		if (key == KeyEvent.VK_W)
-			wPressed();
-		if (key == KeyEvent.VK_S)
-			sPressed();
-		if (key == KeyEvent.VK_A)
-			aPressed();
-		if (key == KeyEvent.VK_D)
-			dPressed();
-	}
+			int key=e.getKeyCode();
+			if (key == KeyEvent.VK_UP)
+				forward1=true;
+			if (key == KeyEvent.VK_DOWN)
+				back1=true;
+			if (key == KeyEvent.VK_LEFT)
+				left1=true;
+			if (key == KeyEvent.VK_RIGHT)
+				right1=true;
+			if (key == KeyEvent.VK_W)
+				forward2=true;
+			if (key == KeyEvent.VK_S)
+				back2=true;
+			if (key == KeyEvent.VK_A)
+				left2=true;
+			if (key == KeyEvent.VK_D)
+				right2=true;
+		}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		int key=e.getKeyCode();
-		if(key == KeyEvent.VK_UP||key == KeyEvent.VK_DOWN||key == KeyEvent.VK_LEFT||key == KeyEvent.VK_RIGHT)
-			p1NotPressed();
-		else if(key == KeyEvent.VK_W||key == KeyEvent.VK_S||key == KeyEvent.VK_A||key == KeyEvent.VK_D)
-			p2NotPressed();
+		if (key == KeyEvent.VK_UP)
+			forward1=false;
+		if (key == KeyEvent.VK_DOWN)
+			back1=false;
+		if (key == KeyEvent.VK_LEFT)
+			left1=false;
+		if (key == KeyEvent.VK_RIGHT)
+			right1=false;
+		if (key == KeyEvent.VK_W)
+			forward2=false;
+		if (key == KeyEvent.VK_S)
+			back2=false;
+		if (key == KeyEvent.VK_A)
+			left2=false;
+		if (key == KeyEvent.VK_D)
+			right2=false;
 	}
-	public void detectCollision(Player p, Obstacle o) {
-		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight()) || p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()){
-			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom()) || p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()){
-				double direction = p.getDirection();
-				if (direction > 270 && direction < 360){
-					System.out.println("4th quad");
-				}
-			}
-		}
+	
+	public void move(){
+		if (!forward1&&!back1&&!left1&&!right1)
+			p1NotPressed();
+		if (!forward2&&!back2&&!left2&&!right2)
+			p2NotPressed();
+		if (forward1)
+			upPressed();
+		if (back1)
+			downPressed();
+		if (left1)
+			leftPressed();
+		if (right1)
+			rightPressed();
+		if (forward2)
+			wPressed();
+		if (forward2&&p2.getVelocity()>1)
+			wPressed();
+		if (back2)
+			sPressed();
+		if (left2)
+			aPressed();
+		if (right2)
+			dPressed();
+		
+		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
+		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
+		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
+		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
+
+		tip.setX(p1.getLeft());
+		tip.setY(p1.getTop());
+		tip2.setX(p2.getLeft());
+		tip2.setY(p2.getTop());
 	}
 
 	//Collision Detection
@@ -223,7 +261,6 @@ public class World extends JPanel implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
-
 		for (Obstacle o : oList)
 			detectCollision(p1, o);
 		for (Obstacle o : oList)
@@ -234,15 +271,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 			detectCollision(p1, b);
 
 		repaint();
-
-		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
-		p1.setY(p1.getTop() + p1.getVelocity() * Math.sin(p1.getDirection() * (Math.PI / 180.)));
-		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
-		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
-
-		tip.setX(p1.getLeft());
-		tip.setY(p1.getTop());
-		tip2.setX(p2.getLeft());
-		tip2.setY(p2.getTop());
+		
+		move();
 	}
 }
