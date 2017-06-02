@@ -1,78 +1,88 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class World extends JPanel implements KeyListener, ActionListener {
 	Timer t;
-	
+
 	Player p1;
 	Player p2;
-	
+
 	Obstacle o1;
 	Obstacle o2;
-	
+
 	// borders
 	Obstacle b1;
 	Obstacle b2;
 	Obstacle b3;
 	Obstacle b4;
-	
+
 	GameScreen g;
-	
-	ArrayList<Obstacle> oList; //Obstacle List
-	ArrayList<Obstacle> bList; //Border List
+
+	ArrayList<Obstacle> oList; // Obstacle List
+	ArrayList<Obstacle> bList; // Border List
+
+	boolean isKeyPressedP1;
+	boolean isKeyPressedP2;
 
 	Tip tip;
 	Tip tip2;
 
+	int w;
+	int h;
+
 	public World() {
-		
+
 		g = new GameScreen();
 
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(true);
 
-		p1 = new Player(50, 50, 30, 30, 0, 5);
-		p2 = new Player(g.returnWidth() - 100, g.returnWidth() - 100, 30, 30, 0, 5);
+		w = g.returnWidth();
+		h = g.returnHeight();
 
-		int w = g.returnWidth();
-		int h = g.returnHeight();
-		
+		p1 = new Player(50, 50, 30, 30, 0, 5);
+		p2 = new Player(w - 150, h - 150, 30, 30, 180, 5);
+
 		b1 = new Obstacle(0, 0, 20, w);
-		b2 = new Obstacle(0, h, 20, w + 20);
-		b3 = new Obstacle(0, 0, h, 20);
-		b4 = new Obstacle(w, 0, h, 20);
-		
+		b2 = new Obstacle(0, h - 100, 20, w + 20);
+		b3 = new Obstacle(0, 0, h - 100, 20);
+		b4 = new Obstacle(w, 0, h - 100, 20);
+
 		oList = new ArrayList<Obstacle>();
 		bList = new ArrayList<Obstacle>();
-		
+
 		bList.add(b1);
 		bList.add(b2);
 		bList.add(b3);
 		bList.add(b4);
-	
-		while(oList.size() < 4) {
-			o1 = new Obstacle((int) ((w - 100) * Math.random() + 50), (int) ((h - 100) * Math.random() + 50),
+
+		while (oList.size() < 4) {
+			o1 = new Obstacle((int) ((w - 260) * Math.random() + 70), (int) ((h - 360) * Math.random() + 70),
 					(int) (60 * Math.random() + 60), (int) (60 * Math.random() + 60));
 			oList.add(o1);
 		}
-	
-		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 70, 10, 0);
-		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 70, 10, 0);
-		
+
+		tip = new Tip(p1.getLeft() + p1.getWidth(), p1.getTop() + ((p1.getHeight() / 2) - 10), 3, 70, 0);
+		tip2 = new Tip(p2.getLeft() + p2.getWidth(), p2.getTop() + ((p2.getHeight() / 2) - 10), 3, 70, 0);
+
 		t = new Timer(5, this);
 		t.start();
-		
+
 	}
 	//Draws World
 	@Override
@@ -116,12 +126,10 @@ public class World extends JPanel implements KeyListener, ActionListener {
 
 	public void rightPressed() {
 		p1.turnRight();
-		System.out.println(p1.getDirection());
 	}
 
 	public void leftPressed() {
 		p1.turnLeft();
-		System.out.println(p1.getDirection());
 	}
 
 	public void wPressed() {
@@ -187,19 +195,9 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		else if(key == KeyEvent.VK_W||key == KeyEvent.VK_S||key == KeyEvent.VK_A||key == KeyEvent.VK_D)
 			p2NotPressed();
 	}
-	public void detectCollision(Player p, Obstacle o) {
-		if ((p.getLeft() >= o.getLeft() && p.getLeft() <= o.getRight()) || p.getRight() >= o.getLeft() && p.getRight() <= o.getRight()){
-			if ((p.getTop() >= o.getTop() && p.getTop() <= o.getBottom()) || p.getBottom() >= o.getTop() && p.getBottom() <= o.getBottom()){
-				double direction = p.getDirection();
-				if (direction > 270 && direction < 360){
-					System.out.println("4th quad");
-				}
-			}
-		}
-	}
-
+	
 	//Collision Detection
-	public void detectCollision(Player p, Obstacle o) {
+	public void detectCollision(Player p, Object o) {
 		double direction = p.getDirection();
 
 		if (p.returnPlayer().intersects(o.returnPlayer())) {
@@ -218,11 +216,20 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		}
 	}
 	
+	public void detectHits(Player p, Tip t){
+		/*int lives = g.getLives();
+		if (t.returnPlayer().intersects(p.returnPlayer())){
+			((JComponent) g.getList().get(lives - 1)).setVisible(false);
+			if (lives > 0)
+				lives--;
+				p.setDirection(p.getDirection() + 180);
+		}*/
+	}
+	
 	//Called every time timer fires
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
 
 		for (Obstacle o : oList)
 			detectCollision(p1, o);
@@ -232,7 +239,10 @@ public class World extends JPanel implements KeyListener, ActionListener {
 			detectCollision(p2, b);
 		for (Obstacle b : bList)
 			detectCollision(p1, b);
-
+		
+		detectHits(p1, tip2);
+		detectHits(p2, tip);
+		
 		repaint();
 
 		p1.setX(p1.getLeft() + p1.getVelocity() * Math.cos(p1.getDirection() * (Math.PI / 180.)));
@@ -240,9 +250,7 @@ public class World extends JPanel implements KeyListener, ActionListener {
 		p2.setX(p2.getLeft() + p2.getVelocity() * Math.cos(p2.getDirection() * (Math.PI / 180.)));
 		p2.setY(p2.getTop() + p2.getVelocity() * Math.sin(p2.getDirection() * (Math.PI / 180.)));
 
-		tip.setX(p1.getLeft());
-		tip.setY(p1.getTop());
-		tip2.setX(p2.getLeft());
-		tip2.setY(p2.getTop());
+		tip.setPosition(p1.getLeft(), p1.getTop() + p1.getHeight()/2 - tip.getWidth()/2);
+		tip2.setPosition(p2.getLeft(), p2.getTop() + p2.getHeight()/2 - tip.getWidth()/2);
 	}
 }

@@ -1,13 +1,8 @@
-package Finalp;
 import javax.swing.*;
-
-import Finalp.World;
-
 import java.awt.Font;
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainMenu extends JPanel{
 	private Font titleFont;
@@ -25,6 +20,7 @@ public class MainMenu extends JPanel{
 	World w;
 	
 	public MainMenu(){
+		
 		GameScreen g = new GameScreen();
 		setLayout(null);
 		titleFont = new Font("Bebas Neue Regular", Font.BOLD, 100);
@@ -74,9 +70,15 @@ public class MainMenu extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GameScreen ref=new GameScreen();
-				World game = new World();
-				ref.addPanel(game);
-				ref.initJFrame();
+				World game;
+				try {
+					game = new World();
+					ref.addPanel(game);
+					ref.initJFrame();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -86,7 +88,12 @@ public class MainMenu extends JPanel{
 				GameScreen ref=new GameScreen();
 				Instructions in = new Instructions();
 				ref.addPanel(in);
-				ref.initJFrame();
+				try {
+					ref.initJFrame();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		

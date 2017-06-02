@@ -17,6 +17,11 @@ public class Object {
 		this.y = y;
 	}
 
+	public void setPosition(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public double getLeft() {
 		return x;
 	}
@@ -36,10 +41,12 @@ public class Object {
 	public double getWidth(){
 		return width;
 	} 
+	
 	public double getHeight(){
 		return height;
 	}
 	
+
 	public Rectangle returnPlayer() {
 		Rectangle rect = new Rectangle((int) x,(int) y,(int) height, (int) width);
 		return rect;
